@@ -1,7 +1,7 @@
-WIFI_SSID = "Jio111"
-WIFI_PASSWORD = "123456789"
+WIFI_SSID = "wifi_name"
+WIFI_PASSWORD = "wifi_password_here"
 
-MQTT_SERVER = "192.168.29.72"
+MQTT_SERVER = "mqtt_server"
 MQTT_PORT = 1884
 
 DEVICE_ID = "ESP-B"
