@@ -1,0 +1,46 @@
+{
+  "feature_order": [
+    "duration",
+    "src_port",
+    "dst_port",
+    "proto",
+    "src_bytes",
+    "dst_bytes",
+    "src_pkts",
+    "dst_pkts",
+    "src_ip_bytes",
+    "dst_ip_bytes"
+  ],
+  "class_to_id": {
+    "normal": 0,
+    "scanning": 1,
+    "dos": 2,
+    "ddos": 3,
+    "ransomware": 4,
+    "backdoor": 5
+  },
+  "class_names": [
+    "normal",
+    "scanning",
+    "dos",
+    "ddos",
+    "ransomware",
+    "backdoor"
+  ],
+  "protocol_to_id": {
+    "tcp": 1,
+    "udp": 2,
+    "icmp": 3
+  },
+  "log1p_features": [
+    "duration",
+    "src_bytes",
+    "dst_bytes",
+    "src_pkts",
+    "dst_pkts",
+    "src_ip_bytes",
+    "dst_ip_bytes"
+  ],
+  "random_state": 42,
+  "max_duration": 12000
+}
