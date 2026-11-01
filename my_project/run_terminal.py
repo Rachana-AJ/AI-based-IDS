@@ -63,6 +63,13 @@ class TerminalIDSApp:
         self.running = True
         self.serial_connections = []
         self.seen_packets = set()
+        try:
+            _s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            _s.connect(("8.8.8.8", 80))
+            self.local_ip = _s.getsockname()[0]
+            _s.close()
+        except Exception:
+            self.local_ip = "10.154.43.194"
 
         print(ColorFormatter.header("Loading PyTorch Intrusion Detection Engine & Scaler..."), flush=True)
         self.engine = InferenceEngine(MODEL_DIR)
@@ -84,9 +91,9 @@ class TerminalIDSApp:
         print(f"  {BOLD}Scaler:{RESET} Scikit-Learn StandardScaler (10 flow features, log1p)", flush=True)
         print(f"  {BOLD}Classes:{RESET} {', '.join(CLASS_NAMES)}", flush=True)
         print(f"  {BOLD}Defense Policy:{RESET} Auto-block on 3 consecutive attack alerts (>= 90% conf)", flush=True)
-        print(f"  {BOLD}Monitor Dashboard:{RESET} {GREEN}{BOLD}http://localhost:3000{RESET} (or {GREEN}http://10.240.36.194:3000{RESET} on phone)", flush=True)
+        print(f"  {BOLD}Monitor Dashboard:{RESET} {GREEN}{BOLD}http://localhost:5173{RESET} (or {GREEN}http://{self.local_ip}:5173{RESET} on phone)", flush=True)
         print(f"  {BOLD}Backend API:{RESET} {GREEN}http://localhost:8000{RESET} (Unified in real-time)", flush=True)
-        print(f"  {BOLD}Mobile MQTT App:{RESET} Connect Play Store App to {GREEN}10.240.36.194:{self.proxy_port}{RESET}", flush=True)
+        print(f"  {BOLD}Mobile MQTT App:{RESET} Connect Play Store App to {GREEN}{self.local_ip}:{self.proxy_port}{RESET}", flush=True)
         print(f"  {BOLD}Hardware Nodes:{RESET} COM9 (ESP-A), COM13 (ESP-B)", flush=True)
         print(f"{CYAN}{'-'*80}{RESET}", flush=True)
         print(f"  {BOLD}Interactive Terminal Commands:{RESET}", flush=True)
@@ -301,7 +308,7 @@ class TerminalIDSApp:
                 time.sleep(0.05)
             ser.close()
         except Exception as e:
-            print(f"[HARDWARE BRIDGE] {port} notice: {e}", flush=True)
+            print(ColorFormatter.warning(f"[HARDWARE BRIDGE] {port} ({device_id}) not on USB -> Listening over Wi-Fi MQTT"), flush=True)
 
     def start_api_server(self, port=8000):
         def uvicorn_worker():
