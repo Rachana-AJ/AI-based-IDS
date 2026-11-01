@@ -83,4 +83,4 @@ def sync_device(port, src_dir: Path):
 
 WORKSPACE_ROOT = Path(r"c:\Users\deepu\Documents\Project_Major")
 sync_device("COM9", WORKSPACE_ROOT / "esp_related_files" / "esp_1")
-sync_device("COM10", WORKSPACE_ROOT / "esp_related_files" / "esp_2")
+sync_device("COM13", WORKSPACE_ROOT / "esp_related_files" / "esp_2")
